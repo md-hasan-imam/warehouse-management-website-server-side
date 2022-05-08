@@ -21,6 +21,13 @@ async function run() {
     await client.connect();
     const inventoryCollection = client.db('stoCare').collection('inventories');
 
+    // load user items based on their email
+    app.get('/inventories',async(req,res)=>{
+      const email= req.query.email;
+      const query = {email: email };
+      const cursor = inventoryCollection.find(query);
+      const myItems = await cursor.toArray();
+      res.send(myItems);
 
     // loading all inventories 
     app.get('/inventories', async (req, res) => {
@@ -28,7 +35,6 @@ async function run() {
       const cursor = inventoryCollection.find(query);
       const inventories = await cursor.toArray();
       res.send(inventories);
-      console.log(inventories)
     })
 
     // loading single inventories using dynamic url
@@ -61,6 +67,21 @@ async function run() {
       const query = { _id: ObjectId(id) }
       const result = await inventoryCollection.deleteOne(query);
       res.send(result);
+    })
+
+    // add new item 
+    app.post('/inventories',async(req,res)=>{
+      const newItem = req.body;
+      const result = await inventoryCollection.insertOne(newItem);
+      console.log(result);
+    })
+
+    
+
+      
+      // const newItem = req.body;
+      // const result = await inventoryCollection.insertOne(newItem);
+      // console.log(result);
     })
 
   } finally {
