@@ -37,6 +37,7 @@ async function run() {
       const cursor = inventoryCollection.find(query);
       const myItems = await cursor.toArray();
       res.send(myItems);
+    })
       
     // loading single inventories using dynamic url
     app.get('/inventory/:id', async (req, res) => {
@@ -71,18 +72,10 @@ async function run() {
     })
 
     // add new item 
-    app.post('/addinventory',async(req,res)=>{
+    app.post('/additem',async(req,res)=>{
       const newItem = req.body;
       const result = await inventoryCollection.insertOne(newItem);
       res.send(result);
-    })
-
-    
-
-      
-      // const newItem = req.body;
-      // const result = await inventoryCollection.insertOne(newItem);
-      // console.log(result);
     })
 
   } finally {
@@ -90,11 +83,6 @@ async function run() {
   }
 }
 run().catch(console.dir);
-
-app.get('/', (req, res) => {
-  res.send('running my inventory server')
-})
-
 
 app.listen(port, () => {
   console.log('server is running on port', port);
