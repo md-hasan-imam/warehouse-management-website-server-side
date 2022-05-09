@@ -71,7 +71,7 @@ async function run() {
     })
 
     // add new item 
-    app.post('/inventories',async(req,res)=>{
+    app.post('/addinventory',async(req,res)=>{
       const newItem = req.body;
       const result = await inventoryCollection.insertOne(newItem);
       console.log(result);
