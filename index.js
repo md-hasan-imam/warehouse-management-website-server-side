@@ -31,7 +31,7 @@ async function run() {
     })
 
     // load user items based on their email
-    app.get('/inventories',async(req,res)=>{
+    app.get('/myitems',async(req,res)=>{
       const email= req.query.email;
       const query = {email: email };
       const cursor = inventoryCollection.find(query);
